@@ -19,80 +19,54 @@ public class CourseTest {
     assertTrue(firstCourse.equals(secondCourse));
   }
 
-  // @Test
-  // public void save_savesIntoDatabase_true() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //   assertTrue(Category.all().get(0).equals(myCategory));
-  // }
-  //
-  // @Test
-  // public void find_findCategoryInDatabase_true() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //   Category savedCategory = Category.find(myCategory.getId());
-  //   assertTrue(myCategory.equals(savedCategory));
-  // }
-  //
-  // @Test
-  // public void getName_returnsName_true() {
-  //   Category testCategory = new Category("Home");
-  //   assertEquals("Home", testCategory.getName());
-  // }
-  //
-  // @Test
-  // public void getId_returnsCategoryId() {
-  //   Category testCategory = new Category("Home");
-  //   assertTrue(Category.all().size() == testCategory.getId());
-  // }
-  //
-  // @Test
-  // public void all_returnsAllInstancesOfTask_true() {
-  //   Category firstCategory = new Category("Home");
-  //   Category secondCategory = new Category("Home");
-  //   firstCategory.save();
-  //   secondCategory.save();
-  //   assertTrue(Category.all().contains(firstCategory));
-  //   assertTrue(Category.all().contains(secondCategory));
-  // }
-  //
-  // @Test
-  // public void addTask_addsTaskToCategory() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //
-  //   Task myTask = new Task("Mow the lawn");
-  //   myTask.save();
-  //
-  //   myCategory.addTask(myTask);
-  //   Task savedTask = myCategory.getTasks().get(0);
-  //   assertTrue(myTask.equals(savedTask));
-  // }
-  //
-  // @Test
-  // public void getTasks_returnsAllTasks_ArrayList() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //
-  //   Task myTask = new Task("Mow the lawn");
-  //   myTask.save();
-  //
-  //   myCategory.addTask(myTask);
-  //   List savedTasks = myCategory.getTasks();
-  //   assertEquals(savedTasks.size(), 1);
-  // }
-  //
-  // @Test
-  // public void delete_deletesAllTasksAndListsAssociations() {
-  //   Category myCategory = new Category("Household chores");
-  //   myCategory.save();
-  //
-  //   Task myTask = new Task("Mow the lawn");
-  //   myTask.save();
-  //
-  //   myCategory.addTask(myTask);
-  //   myCategory.delete();
-  //   assertEquals(myTask.getCategories().size(), 0);
-  // }
+  @Test
+  public void save_savesIntoDatabase_true() {
+    Course myCourse = new Course("Intro to Brawling", "BRWL101");
+    myCourse.save();
+    assertTrue(Course.all().get(0).equals(myCourse));
+  }
 
+  @Test
+  public void find_findCourseInDatabase_true() {
+    Course myCourse = new Course("Intro to Brawling", "BRWL101");
+    myCourse.save();
+    Course savedCourse = Course.find(myCourse.getId());
+    assertTrue(myCourse.equals(savedCourse));
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfCourse_true() {
+    Course firstCourse = new Course("Intro to Brawling", "BRWL101");
+    Course secondCourse = new Course("Intro to Pickpocketing", "PCKP101");
+    firstCourse.save();
+    secondCourse.save();
+    assertTrue(Course.all().contains(firstCourse));
+    assertTrue(Course.all().contains(secondCourse));
+  }
+
+  @Test
+  public void addStudent_addsStudentToCourse() {
+    Course myCourse = new Course("Intro to Brawling", "BRWL101");
+    myCourse.save();
+
+    Student myStudent = new Student("Shifty FiveFingers");
+    myStudent.save();
+
+    myCourse.addStudent(myStudent);
+    Student savedStudent = myCourse.getStudents().get(0);
+    assertTrue(myStudent.equals(savedStudent));
+  }
+
+  @Test
+  public void delete_deletesAllCoursesAndListsAssociations() {
+    Course myCourse = new Course("Intro to Brawling", "BRWL101");
+    myCourse.save();
+
+    Student myStudent = new Student("Shifty FiveFingers");
+    myStudent.save();
+
+    myCourse.addStudent(myStudent);
+    myCourse.delete();
+    assertEquals(myStudent.getCourses().size(), 0);
+  }
 }
