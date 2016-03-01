@@ -23,9 +23,27 @@ public class Course {
     return course_number;
   }
 
+  @Override
+  public boolean equals(Object otherCourse){
+    if (!(otherCourse instanceof Course)) {
+      return false;
+    } else {
+      Course newCourse = (Course) otherCourse;
+      return this.getCourseName().equals(newCourse.getCourseName()) &&
+             this.getCourseNumber().equals(newCourse.getCourseNumber());
+    }
+  }
+
   //CREATE//
 
   //READ//
+  public static List<Course> all() {
+    String sql = "SELECT id, course_name, course_number FROM courses";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+      .executeAndFetch(Course.class);
+    }
+  }
 
   //UPDATE//
 

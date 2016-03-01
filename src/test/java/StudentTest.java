@@ -1,8 +1,9 @@
 import org.junit.*;
+import java.time.LocalDate;
 import static org.junit.Assert.*;
 import org.junit.Rule;
 
-public class UnitTest {
+public class StudentTest {
 
   @Rule
   public DatabaseRule database = new DatabaseRule();

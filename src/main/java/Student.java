@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 import org.sql2o.*;
 
 public class Student {
@@ -21,6 +22,16 @@ public class Student {
   public LocalDate getEnrollmentDate() {
     return enrollment_date;
   }
+
+  // @Override
+  // public boolean equals(Course ot){
+  //   if (!(otherCategory instanceof Category)) {
+  //     return false;
+  //   } else {
+  //     Category newCategory = (Category) otherCategory;
+  //     return this.getName().equals(newCategory.getName());
+  //   }
+  // }
 
   //CREATE//
 
