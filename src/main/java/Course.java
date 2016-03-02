@@ -62,30 +62,21 @@ public class Course {
   public static Course find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM Courses where id=:id";
-      Course course = con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Course.class);
+      Course course = con.createQuery(sql)
+                         .addParameter("id", id)
+                         .executeAndFetchFirst(Course.class);
       return course;
     }
   }
 
-  public ArrayList<Student> getStudents() {
-  try(Connection con = DB.sql2o.open()){
-    String sql = "SELECT student_id FROM enrollments WHERE course_id = :course_id";
-    List<Integer> studentIds = con.createQuery(sql)
-      .addParameter("course_id", this.getId())
-      .executeAndFetch(Integer.class);
-
-    ArrayList<Student> students = new ArrayList<Student>();
-
-    for (Integer studentId : studentIds) {
-      String studentQuery = "SELECT * FROM students WHERE id = :studentId";
-      Student student = con.createQuery(studentQuery)
-        .addParameter("studentId", studentId)
-        .executeAndFetchFirst(Student.class);
-        students.add(student);
+  public List<Student> getStudents() {
+    String sql = "SELECT students.* FROM courses JOIN enrollments ON (courses.id = enrollments.course_id) JOIN students ON (enrollments.student_id = students.id) WHERE courses.id = :course_id";
+    try(Connection con = DB.sql2o.open()) {
+        return con.createQuery(sql)
+          .addParameter("course_id", id)
+          .executeAndFetch(Student.class);
     }
-    return students;
   }
-}
 
   //UPDATE//
   public void addStudent(Student student) {
@@ -101,16 +92,16 @@ public class Course {
 
   //DESTROY//
   public void delete() {
-  try(Connection con = DB.sql2o.open()) {
-    String sql = "DELETE FROM courses WHERE id = :id;";
-    con.createQuery(sql)
-      .addParameter("id", id)
-      .executeUpdate();
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM courses WHERE id = :id;";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
 
-    String enrollmentsQuery = "DELETE FROM enrollments WHERE course_id = :courseId";
-    con.createQuery(enrollmentsQuery)
-      .addParameter("courseId", this.getId())
-      .executeUpdate();
-    }
+      String enrollmentsQuery = "DELETE FROM enrollments WHERE course_id = :courseId";
+      con.createQuery(enrollmentsQuery)
+        .addParameter("courseId", this.getId())
+        .executeUpdate();
+      }
   }
 }

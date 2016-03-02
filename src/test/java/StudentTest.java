@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import static org.junit.Assert.*;
 import org.junit.Rule;
 import java.util.ArrayList;
+import java.util.List;
 public class StudentTest {
 
   @Rule
@@ -122,7 +123,7 @@ public class StudentTest {
     myStudent.save();
 
     myStudent.addCourse(myCourse);
-    ArrayList<Course> savedCourse = myStudent.getCourses();
+    List<Course> savedCourse = myStudent.getCourses();
     assertEquals(savedCourse.size(), 1);
   }
 }
