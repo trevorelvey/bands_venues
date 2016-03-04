@@ -4,10 +4,11 @@ import static org.junit.Assert.*;
 import org.junit.Rule;
 import java.util.ArrayList;
 import java.util.List;
-public class StudentTest {
+
+public class VenueTest {
 
   @Rule
   public DatabaseRule database = new DatabaseRule();
 
-  
+
 }
