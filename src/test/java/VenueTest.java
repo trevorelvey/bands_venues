@@ -28,4 +28,22 @@ public class VenueTest {
     myVenue.save();
     assertTrue(Venue.all().get(0).equals(myVenue));
   }
+
+  @Test
+  public void find_findVenueInDatabase_true() {
+    Venue myVenue = new Venue("Wonder Ballroom");
+    myVenue.save();
+    Venue savedVenue = Venue.find(myVenue.getId());
+    assertTrue(myVenue.equals(savedVenue));
+  }
+
+  @Test
+  public void all_returnsAllInstancesOfVenue_true() {
+    Venue firstVenue = new Venue("Wonder Ballroom");
+    Venue secondVenue = new Venue("Doug Fir");
+    firstVenue.save();
+    secondVenue.save();
+    assertTrue(Venue.all().contains(firstVenue));
+    assertTrue(Venue.all().contains(secondVenue));
+  }
 }
