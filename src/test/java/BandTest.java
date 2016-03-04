@@ -45,5 +45,29 @@ public class BandTest {
       assertTrue(Band.all().contains(secondBand));
     }
 
-    
+    @Test
+  public void addVenue_addsVenueToBand() {
+    Band myBand = new Band("Mogwai");
+    myBand.save();
+
+    Venue myVenue = new Venue("Wonder Ballroom");
+    myVenue.save();
+
+    myBand.addVenue(myVenue);
+    Venue savedVenue = myBand.getVenues().get(0);
+    assertTrue(myVenue.equals(savedVenue));
+  }
+
+  @Test
+  public void delete_deletesAllBandsAndListsAssociations() {
+    Band myBand = new Band("Mogwai");
+    myBand.save();
+
+    Venue myVenue = new Venue("Wonder Ballroom");
+    myVenue.save();
+
+    myBand.addVenue(myVenue);
+    myBand.delete();
+    assertEquals(myVenue.getBands().size(), 0);
+  }
 }

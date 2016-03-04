@@ -60,9 +60,39 @@ public class Band {
     }
   }
 
-  //UPDATE//
+  public List<Venue> getVenues() {
+    String sql = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE bands.id = :band_id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+      .addParameter("band_id", id)
+      .executeAndFetch(Venue.class);
+    }
+  }
 
+  //UPDATE//
+  public void addVenue(Venue venue) {
+      try(Connection con = DB.sql2o.open()) {
+        String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
+        con.createQuery(sql)
+
+          .addParameter("band_id", this.getId())
+          .addParameter("venue_id", venue.getId())
+          .executeUpdate();
+      }
+    }
 
   //DESTROY//
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM bands WHERE id = :id;";
+      con.createQuery(sql)
+      .addParameter("id", id)
+      .executeUpdate();
 
+      String bands_venuesQuery = "DELETE FROM bands_venues WHERE band_id = :bandId";
+      con.createQuery(bands_venuesQuery)
+      .addParameter("bandId", this.getId())
+      .executeUpdate();
+    }
+  }
 }
