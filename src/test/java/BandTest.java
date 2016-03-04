@@ -44,4 +44,6 @@ public class BandTest {
       assertTrue(Band.all().contains(firstBand));
       assertTrue(Band.all().contains(secondBand));
     }
+
+    
 }
