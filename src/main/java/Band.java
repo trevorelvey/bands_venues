@@ -31,7 +31,15 @@ public class Band {
   }
 
   //CREATE//
-
+  public void save() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "INSERT INTO bands(band_name) VALUES (:band_name)";
+    this.id = (int) con.createQuery(sql,true)
+    .addParameter("band_name", this.band_name)
+    .executeUpdate()
+    .getKey();
+    }
+  }
 
   //READ//
   public static List<Band> all() {
@@ -39,6 +47,16 @@ public class Band {
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
       .executeAndFetch(Band.class);
+    }
+  }
+
+  public static Band find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM Bands where id=:id";
+      Band band = con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetchFirst(Band.class);
+      return band;
     }
   }
 
