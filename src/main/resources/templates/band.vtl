@@ -1,1 +1,55 @@
 band.vtl
+
+<div class="container">
+<h2>$band.getBandName()</h2>
+
+
+    <ul>
+      #foreach($venue in $band.getVenues())
+        <li>$venue.getVenueName()</li>
+      #end
+    </ul>
+
+    <h4>Add a New Venue</h4>
+    <form action="/$band.getId()/new-venue" method="post">
+      <input id="name-venue" name="name-venue" type="text" required>
+      <br>
+      <label for="id-band">Select a Band</label>
+      <select id="id-band" name="id-band" type="text">
+        <option value="$band.getId()">$band.getBandName()</option>
+      </select>
+      <br><br>
+      <button type="submit" class="btn btn-default new-venue">Submit</button>
+    </form>
+    <br><br>
+
+    <h4>Remove a Venue</h4>
+    <form action="/$band.getId()/delete-venue" method="post">
+      <select id="id-venue" name="id-venue" type="text">
+        #foreach($venue in $band.getVenues())
+        <option value="$venue.getId()">$venue.getVenueName()</option>
+        #end
+      </select>
+      <br>
+      <br>
+      <button type="submit" class="btn btn-default delete-venue">Submit</button>
+    </form>
+    <br><br>
+
+    <h4>Update a venue</h4>
+    <form action="/$band.getId()/update-venue" method="post">
+      <label for="id-venue">Select a Venue</label>
+      <select id="id-venue" name="id-venue" type="text">
+        #foreach($venue in $band.getVenues())
+        <option value="$venue.getId()">$venue.getVenueName()</option>
+        #end
+      </select>
+      <br><br>
+      <label for="newBandName-venue">Update Venue Name</label>
+      <br>
+      <input id="newBandName-venue" name="newBandName-venue" type="text">
+      <br>
+      <br>
+      <button type="submit" class="btn btn-default update-venue">Update Venue</button>
+    </form>
+  </div>

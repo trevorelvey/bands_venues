@@ -1,6 +1,46 @@
 index.vtl
 
-<h1>...</h1>
+<div class="container">
+<h2>Enter a Band</h2>
 
-<h3><a href="/bands"><button class="btn">Manage Bands</button></a></h3>
-<h3><a href="/venues"><button class="btn">Manage Venues</button></a></h3>
+#foreach($band in $bands)
+    <h4><a href="/$band.getId()">$band.getBandName()</a></h4>
+#end
+
+
+  <h4>Add A Band</h4>
+  <form action="/new-band" method="post">
+    <input id="name-band" name="name-band" type="text" required>
+    <br>
+    <button type="submit" class="btn btn-default new-band">Add</button>
+  </form>
+  <br><br>
+
+  <h4>Remove A Band</h4>
+  <form action="/delete-band" method="post">
+    <select id="id-band" name="id-band" type="text">
+      #foreach($band in $bands)
+      <option value="$band.getId()">$band.getBandName()</option>
+      #end
+    </select>
+    <br><br>
+    <button type="submit" class="btn btn-default delete-band">Remove</button>
+  </form>
+  <br><br>
+
+  <h4>Update A Band</h4>
+  <form action="/update-band" method="post">
+    <select id="id-band" name="id-band" type="text">
+      #foreach($band in $bands)
+      <option value="$band.getId()">$band.getBandName()</option>
+      #end
+    </select>
+    <br><br>
+    <label for="newName-band">Update Name</label>
+    <input id="newName-band" name="newName-band" type="text">
+    <br>
+    <br>
+    <button type="submit" class="btn btn-default update-band">Update</button>
+  </form>
+
+</div>

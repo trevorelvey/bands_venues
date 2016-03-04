@@ -70,16 +70,27 @@ public class Band {
   }
 
   //UPDATE//
-  public void addVenue(Venue venue) {
-      try(Connection con = DB.sql2o.open()) {
-        String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
-        con.createQuery(sql)
-
-          .addParameter("band_id", this.getId())
-          .addParameter("venue_id", venue.getId())
-          .executeUpdate();
-      }
+  public void update(String newBandName) {
+    this.band_name = newBandName;
+    String sql = "UPDATE bands SET band_name = :newBandName WHERE id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+      .addParameter("newBandName", newBandName)
+      .addParameter("id", this.id)
+      .executeUpdate();
     }
+  }
+
+  public void addVenue(Venue venue) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
+      con.createQuery(sql)
+
+      .addParameter("band_id", this.getId())
+      .addParameter("venue_id", venue.getId())
+      .executeUpdate();
+    }
+  }
 
   //DESTROY//
   public void delete() {

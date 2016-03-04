@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 import org.sql2o.*;
 
 public class Venue {
@@ -64,23 +63,57 @@ public class Venue {
   public List<Band> getBands() {
     String sql = "SELECT bands.* FROM venues JOIN bands_venues ON (venues.id = bands_venues.venue_id) JOIN bands ON (bands_venues.band_id = bands.id) WHERE venues.id = :venue_id";
     try(Connection con = DB.sql2o.open()) {
-        return con.createQuery(sql)
-          .addParameter("venue_id", id)
-          .executeAndFetch(Band.class);
+      return con.createQuery(sql)
+      .addParameter("venue_id", id)
+      .executeAndFetch(Band.class);
     }
   }
 
   //UPDATE//
-  public void addBand(Band band) {
-      try(Connection con = DB.sql2o.open()) {
-        String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id)";
-        con.createQuery(sql)
-          .addParameter("band_id", band.getId())
-          .addParameter("venue_id", this.getId())
-          .executeUpdate();
-      }
+  public void update(String newVenueName) {
+    this.venue_name = newVenueName;
+    String sql = "UPDATE venues SET venue_name = :newVenueName WHERE id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+      .addParameter("newVenueName", newVenueName)
+      .addParameter("id", this.id)
+      .executeUpdate();
     }
+  }
+
+  public void addBand(Band band) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id)";
+      con.createQuery(sql)
+      .addParameter("band_id", band.getId())
+      .addParameter("venue_id", this.getId())
+      .executeUpdate();
+    }
+  }
+
+  public void assignBand(int band_id) {
+    band_id = band_id;
+    String sql = "UPDATE venues SET band_id = :band_id WHERE id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+         .addParameter("band_id", band_id)
+         .addParameter("id", this.id)
+         .executeUpdate();
+    }
+  }
 
   //DESTROY//
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM venues WHERE id = :id;";
+      con.createQuery(sql)
+      .addParameter("id", id)
+      .executeUpdate();
 
+      String venues_venuesQuery = "DELETE FROM venues_venues WHERE venue_id = :venueId";
+      con.createQuery(venues_venuesQuery)
+      .addParameter("venueId", this.getId())
+      .executeUpdate();
+    }
+  }
 }
