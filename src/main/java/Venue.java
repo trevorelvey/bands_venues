@@ -93,7 +93,7 @@ public class Venue {
 
   public void assignBand(int band_id) {
     band_id = band_id;
-    String sql = "UPDATE venues SET band_id = :band_id WHERE id=:id";
+    String sql = "UPDATE bands_venues SET band_id = :band_id WHERE venue_id=:venue_id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)
          .addParameter("band_id", band_id)
@@ -110,8 +110,8 @@ public class Venue {
       .addParameter("id", id)
       .executeUpdate();
 
-      String venues_venuesQuery = "DELETE FROM venues_venues WHERE venue_id = :venueId";
-      con.createQuery(venues_venuesQuery)
+      String bands_venuesQuery = "DELETE FROM bands_venues WHERE venue_id = :venueId";
+      con.createQuery(bands_venuesQuery)
       .addParameter("venueId", this.getId())
       .executeUpdate();
     }

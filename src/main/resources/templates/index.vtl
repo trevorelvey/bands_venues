@@ -1,46 +1,30 @@
 index.vtl
 
-<div class="container">
-<h2>Enter a Band</h2>
+<h2>Bands and Where They Play:</h2>
 
-#foreach($band in $bands)
-    <h4><a href="/$band.getId()">$band.getBandName()</a></h4>
+<form action="/band" method="post">
+  <div class="form-group">
+    <label for="newBandName">Enter a Band</label>
+    <input type="text" name="newBandName" class="form-control" id="newBandName" required>
+
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+<h4>Band List</h4>
+#foreach ($band in $bands)
+<li><a href="/band/$band.getId()">$band.getBandName()</a></li>
 #end
+<br>
+<form action="/venue" method="post">
+  <div class="form-group">
+    <label for="newVenue">Enter a Venue</label>
+    <input type="text" name="newVenue" class="form-control" id="newVenue" required>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
 
-
-  <h4>Add A Band</h4>
-  <form action="/new-band" method="post">
-    <input id="name-band" name="name-band" type="text" required>
-    <br>
-    <button type="submit" class="btn btn-default new-band">Add</button>
-  </form>
-  <br><br>
-
-  <h4>Remove A Band</h4>
-  <form action="/delete-band" method="post">
-    <select id="id-band" name="id-band" type="text">
-      #foreach($band in $bands)
-      <option value="$band.getId()">$band.getBandName()</option>
-      #end
-    </select>
-    <br><br>
-    <button type="submit" class="btn btn-default delete-band">Remove</button>
-  </form>
-  <br><br>
-
-  <h4>Update A Band</h4>
-  <form action="/update-band" method="post">
-    <select id="id-band" name="id-band" type="text">
-      #foreach($band in $bands)
-      <option value="$band.getId()">$band.getBandName()</option>
-      #end
-    </select>
-    <br><br>
-    <label for="newName-band">Update Name</label>
-    <input id="newName-band" name="newName-band" type="text">
-    <br>
-    <br>
-    <button type="submit" class="btn btn-default update-band">Update</button>
-  </form>
-
-</div>
+<h4>Venue List</h4>
+#foreach ($venue in $venues)
+<li><a href="/venue/$venue.getId()">$venue.getVenueName()</a></li>
+#end

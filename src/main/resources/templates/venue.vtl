@@ -1,0 +1,30 @@
+venue.vtl
+
+<h2>Venue Name: $venue.getVenueName()</h2>
+<br>
+<form action ="/delete/venue/:id" method ='post'>
+  <input id="venueId" name="venueId" type="hidden" value="$venue.getId()">
+  <button type="submit" class="btn btn-default">Delete Venue </button>
+</form>
+
+  #foreach ($band in $venue.getBands())
+  <li><h4><a href="/band/$band.getId()">$band.getBandName()</a></h4></li>
+  #end
+
+
+<form action="/venue/$venue.getId()" method="post">
+
+  <input id="venueId" name="venueId" type="hidden" value="$venue.getId()">
+
+  <label for="bandId">Assign band to a venue</label>
+  <select id="bandId" name="bandId" type="text">
+    #foreach ($band in $allBands)
+    <option value="$band.getId()">$band.getBandName()</option>
+    #end
+  </select>
+  <button type="submit" class="btn btn-default">Assign Band</button>
+</form>
+
+<br>
+
+Return to <a href="/">Main Page</a>

@@ -30,29 +30,8 @@ public class AppTest extends FluentTest {
   @Test
   public void bandAddedSuccessfully() {
     goTo("http://localhost:4567/");
-    fill("#name-band").with("Mogwai");
+    fill("#newBandName").with("Mogwai");
     submit(".new-band");
     assertThat(pageSource()).contains("Mogwai");
-  }
-
-  @Test
-  public void bandRemoved() {
-    Band myBand = new Band("Mogwai");
-    myBand.save();
-    goTo("http://localhost:4567/");
-    click("option", withText("Mogwai"));
-    submit(".delete-band");
-    assertThat(!(pageSource()).contains("Mogwai"));
-  }
-
-  @Test
-  public void bandUpdatedSuccessfully() {
-    Band myBand = new Band("Mogwai");
-    myBand.save();
-    goTo("http://localhost:4567/");
-    click("option", withText("Mogwai"));
-    fill("#newName-band").with("Diiv");
-    submit(".update-band");
-    assertThat(pageSource()).contains("Diiv");
   }
 }
