@@ -17,11 +17,14 @@ venue.vtl
   <input id="venueId" name="venueId" type="hidden" value="$venue.getId()">
 
   <label for="bandId">Assign band to a venue</label>
+  <br>
   <select id="bandId" name="bandId" type="text">
     #foreach ($band in $allBands)
     <option value="$band.getId()">$band.getBandName()</option>
     #end
   </select>
+  <br>
+  <br>
   <button type="submit" class="btn btn-default">Assign Band</button>
 </form>
 

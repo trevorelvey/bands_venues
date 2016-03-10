@@ -19,12 +19,14 @@ band.vtl
     <input id="bandId" name="bandId" type="hidden" value="$band.getId()">
 
     <label for="venueId">Venues</label>
+    <br>
     <select id="venueId" name="venueId" type="text">
       #foreach ($venue in $allVenues)
       <option value="$venue.getId()">$venue.getVenueName()</option>
       #end
     </select>
-
+    <br>
+    <br>
     <button type="submit" class="btn btn-default">Submit</button>
   </form>
 
@@ -33,7 +35,8 @@ band.vtl
     <input id="bandId" name="bandId" type="hidden" value="$band.getId()">
     <label for="bandName">Band Name:</label>
     <textarea class="form-control" rows="1" name="bandName">$band.getBandName()</textarea>
-
+    <br>
+    <button type="submit" class="btn btn-default">Submit</button>
   </form>
   <br>
 
